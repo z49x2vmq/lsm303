@@ -5,6 +5,7 @@
 #define __LSM303DLHC_H
 // vim: ts=4 sw=4 expandtab
 
+// Linear acceleration related register addesses
 static const uint8_t CTRL_REG1_A     = 0x20;
 static const uint8_t CTRL_REG2_A     = 0x21;
 static const uint8_t CTRL_REG3_A     = 0x22;
@@ -35,6 +36,33 @@ static const uint8_t CLICK_THS_A     = 0x3a;
 static const uint8_t TIME_LIMIT_A    = 0x3b;
 static const uint8_t TIME_LATENCY_A  = 0x3c;
 static const uint8_t TIME_WINDOW_A   = 0x3d;
+
+// Options for CTRL_REG1_A
+static const uint8_t ODR_DOWN  = 0b0000 << 4;
+static const uint8_t ODR_1Hz   = 0b0001 << 4;
+static const uint8_t ODR_10Hz  = 0b0010 << 4;
+static const uint8_t ODR_25Hz  = 0b0011 << 4;
+static const uint8_t ODR_50Hz  = 0b0100 << 4;
+static const uint8_t ODR_100Hz = 0b0101 << 4;
+static const uint8_t ODR_200Hz = 0b0110 << 4;
+static const uint8_t ODR_400Hz = 0b0111 << 4;
+static const uint8_t LPen      = 0b0001 << 3;
+static const uint8_t Zen       = 0b0001 << 2;
+static const uint8_t Yen       = 0b0001 << 1;
+static const uint8_t Xen       = 0b0001 << 0;
+
+// Options for CTRL_REG4_A
+static const uint8_t BDU       = 0b01 << 7;
+static const uint8_t BLE       = 0b01 << 6;
+static const uint8_t FS_2G     = 0b00 << 4;
+static const uint8_t FS_4G     = 0b01 << 4;
+static const uint8_t FS_8G     = 0b10 << 4;
+static const uint8_t FS_16G    = 0b11 << 4;
+static const uint8_t HR        = 0b01 << 3;
+static const uint8_t SIM       = 0b01 << 0;
+
+
+// Magnetic field related register addesses
 static const uint8_t CRA_REG_M       = 0x00;
 static const uint8_t CRB_REG_M       = 0x01;
 static const uint8_t MR_REG_M        = 0x02;
@@ -51,6 +79,7 @@ static const uint8_t IRC_REG_M       = 0x0c;
 static const uint8_t TEMP_OUT_H_M    = 0x31;
 static const uint8_t TEMP_OUT_L_M    = 0x32;
 
+// I2C addresses (Datasheet << 1)
 static const uint8_t LA_ADDRESS      = 0x32;
 static const uint8_t MF_ADDRESS      = 0x3c;
 
@@ -59,5 +88,8 @@ void lsm303dlhc_init_mf(I2C_HandleTypeDef *i2c);
 
 void lsm303dlhc_read_la(I2C_HandleTypeDef *i2c, uint8_t *buf);
 void lsm303dlhc_read_mf(I2C_HandleTypeDef *i2c, uint8_t *buf);
+
+void lsm303dlhc_read_la_b(I2C_HandleTypeDef *i2c, uint8_t *buf);
+void lsm303dlhc_read_mf_b(I2C_HandleTypeDef *i2c, uint8_t *buf);
 
 #endif //__LSM303DLHC_H
